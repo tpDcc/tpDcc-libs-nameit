@@ -206,7 +206,7 @@ class Token(Serializable, object):
             return None
 
         if items and python.is_number(self.default):
-            default_value = self.get_items().values()[self.default-1]
+            default_value = self.get_items().values()[self.default - 1]
             return default_value
 
         return self.default
@@ -272,7 +272,8 @@ class Rule(Serializable, object):
                         if self.auto_fix:
                             continue
                         else:
-                            nameit.logger.warning('Missing field: "{}" when generating new name (None will be used instead)!'.format(k))
+                            nameit.logger.warning(
+                                'Missing field: "{}" when generating new name (None will be used instead)!'.format(k))
                     valid_values[k] = v
 
         # We get pattern taking into account if we want to fix automatically the pattern or not
@@ -937,9 +938,9 @@ class NameLib(object):
                 pass
 
         if not self.has_valid_naming_file():
-            nameit.logger.warning('Impossible to initialize naming data because naming file: "{}" does not exists!'.format(
-                self._naming_file
-            ))
+            nameit.logger.warning(
+                'Impossible to initialize naming data because naming file: "{}" does not exists!'.format(
+                    self._naming_file))
             return None
 
         if self._parser_format == 'yaml':

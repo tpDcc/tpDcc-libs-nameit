@@ -1,3 +1,0 @@
-order = [
-    'tpNameIt.core.namelib'
-]
