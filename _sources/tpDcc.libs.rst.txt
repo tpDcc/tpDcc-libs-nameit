@@ -1,0 +1,17 @@
+tpDcc.libs package
+==================
+
+Subpackages
+-----------
+
+.. toctree::
+
+   tpDcc.libs.nameit
+
+Module contents
+---------------
+
+.. automodule:: tpDcc.libs
+   :members:
+   :undoc-members:
+   :show-inheritance:

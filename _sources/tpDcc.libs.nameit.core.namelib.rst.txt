@@ -1,0 +1,7 @@
+tpDcc.libs.nameit.core.namelib module
+=====================================
+
+.. automodule:: tpDcc.libs.nameit.core.namelib
+   :members:
+   :undoc-members:
+   :show-inheritance:

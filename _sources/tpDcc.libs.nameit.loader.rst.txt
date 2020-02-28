@@ -1,0 +1,7 @@
+tpDcc.libs.nameit.loader module
+===============================
+
+.. automodule:: tpDcc.libs.nameit.loader
+   :members:
+   :undoc-members:
+   :show-inheritance:

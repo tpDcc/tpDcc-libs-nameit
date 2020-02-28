@@ -1,0 +1,25 @@
+tpDcc.libs.nameit package
+=========================
+
+Subpackages
+-----------
+
+.. toctree::
+
+   tpDcc.libs.nameit.core
+
+Submodules
+----------
+
+.. toctree::
+
+   tpDcc.libs.nameit.loader
+   tpDcc.libs.nameit.register
+
+Module contents
+---------------
+
+.. automodule:: tpDcc.libs.nameit
+   :members:
+   :undoc-members:
+   :show-inheritance:
