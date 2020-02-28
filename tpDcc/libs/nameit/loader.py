@@ -26,7 +26,7 @@ def init(do_reload=False, dev=False):
 
     class tpNameIt(importer.Importer, object):
         def __init__(self, *args, **kwargs):
-            super(tpNameIt, self).__init__(module_name='tpNameIt', *args, **kwargs)
+            super(tpNameIt, self).__init__(module_name='tpDcc.libs.nameit', *args, **kwargs)
 
         def get_module_path(self):
             """
