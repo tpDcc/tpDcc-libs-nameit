@@ -74,9 +74,9 @@ def create_logger_directory():
     Creates artellapipe logger directory
     """
 
-    tpdcclib_importer = os.path.normpath(os.path.join(os.path.expanduser('~'), 'tpNameIt', 'logs'))
-    if not os.path.isdir(tpdcclib_importer):
-        os.makedirs(tpdcclib_importer)
+    nameit_importer = os.path.normpath(os.path.join(os.path.expanduser('~'), 'tpDcc-libs-nameit', 'logs'))
+    if not os.path.isdir(nameit_importer):
+        os.makedirs(nameit_importer)
 
 
 def get_logging_config():
