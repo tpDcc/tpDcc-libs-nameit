@@ -208,7 +208,7 @@ class Token(Serializable, object):
         if not items:
             return None
 
-        if items and python.is_number(self.default):
+        if items and python.is_number(self.default) and self.default >= 0:
             default_value = self.get_items().values()[self.default - 1]
             return default_value
 
@@ -868,7 +868,6 @@ class NameLib(object):
             # Get tpToken object from the dictionary of tokens
             if self.has_token(f):
                 token = self.get_token(f)
-
                 if token.is_required():
                     # We are in a required token (a token is required if it does not has default value)
                     if kwargs.get(f) is not None:
