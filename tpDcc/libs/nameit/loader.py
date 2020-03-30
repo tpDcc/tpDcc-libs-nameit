@@ -16,7 +16,7 @@ def init(do_reload=False, dev=False):
     """
     Initializes module
     :param do_reload: bool, Whether to reload modules or not
-    :param dev: bool, Whether artellapipe is initialized in dev mode or not
+    :param dev: bool, Whether tpDcc-libs-naming is initialized in dev mode or not
     """
 
     from tpDcc.libs.nameit import register

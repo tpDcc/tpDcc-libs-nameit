@@ -456,10 +456,10 @@ class NameLib(object):
     _templates_key = 'templates'
     _template_tokens_key = 'template_tokens'
 
-    def __init__(self):
+    def __init__(self, parser_format=None, naming_file=None):
         self._naming_repo_env = 'NAMING_REPO'
-        self._parser_format = 'yaml'
-        self._naming_file = None
+        self._parser_format = parser_format or 'yaml'
+        self._naming_file = naming_file
 
     @property
     def naming_file(self):
@@ -752,6 +752,8 @@ class NameLib(object):
 
         for ref in template_found.references():
             ref_template = self.get_template(ref)
+            if not ref_template:
+                continue
             resolver[ref] = ref_template.template
 
         template_found.set_resolver(resolver)
