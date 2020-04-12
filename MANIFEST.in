@@ -1,1 +1,3 @@
 include tpDcc/libs/nameit/__logging__.ini
+include versioneer.py
+include tpDcc/libs/nameit/_version.py
