@@ -182,17 +182,23 @@ class Token(Serializable, object):
         else:
             return name
 
-    def parse(self, value):
-
-        """ Parse a value taking in account the items of the token | Solved Name - Fields """
+    def parse(self, value, get_keys=True):
+        """
+        Parse a value taking in account the items of the token | Solved Name - Fields
+        """
 
         for k, v in self.get_items().items():
+            if k == 'iterator':
+                if v == '#' and str(value).isdigit():
+                    return v if get_keys else value
             if v == value:
-                return k
+                return k if get_keys else v
 
     def save(self, file_path, parser_format='yaml'):
+        """
+        Saves token to a file as JSON data
+        """
 
-        """ Saves token to a file as JSON data """
         file_path = os.path.join(file_path, self.name + '.token')
         if self.data():
             with open(file_path, 'w') as fp:
@@ -284,7 +290,7 @@ class Rule(Serializable, object):
 
         return valid_pattern.format(**valid_values)
 
-    def parse(self, name):
+    def parse(self, name, tokens, get_keys=False):
         """
         Parse a rule taking in account the fields of the rule
         """
@@ -299,7 +305,14 @@ class Rule(Serializable, object):
 
             # Get current value and its respective token
             value = split_name[i]
-            token = self._tokens[f]
+
+            token = None
+            for token_obj in tokens:
+                if token_obj.name == f:
+                    token = token_obj
+                    break
+            if not token:
+                raise Exception('Not token found with name: {} in name: "{}"'.format(f, name))
 
             if token.is_required():
                 # We are in a required field, and we simply return the value from the split name
@@ -307,7 +320,7 @@ class Rule(Serializable, object):
                 continue
 
             # Else, we parse the token directly
-            ret_val[f] = token.parse(rule=self, name=value)
+            ret_val[f] = token.parse(value=value, get_keys=get_keys)
 
         return ret_val
 
@@ -316,7 +329,7 @@ class Rule(Serializable, object):
         Saves rule to a file as JSON data
         """
 
-        file_path = os.path.join(file_path, self.name() + '.rule')
+        file_path = os.path.join(file_path, self.name + '.rule')
         if self.data():
             with open(file_path, 'w') as fp:
                 if parser_format == 'yaml':
@@ -332,7 +345,7 @@ class Rule(Serializable, object):
         """
 
         if fields is None:
-            fields = self._fields
+            fields = self.fields()
 
         return "{{{}}}".format("}_{".join(fields))
 
@@ -927,7 +940,8 @@ class NameLib(object):
 
         # Parse name comparing it with the active rule
         rule = self.active_rule()
-        return rule.parse(name)
+
+        return rule.parse(name, tokens=self._tokens)
 
     def init_naming_data(self):
         """
