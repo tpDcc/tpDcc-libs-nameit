@@ -1,7 +1,0 @@
-tpDcc.libs.nameit.register module
-=================================
-
-.. automodule:: tpDcc.libs.nameit.register
-   :members:
-   :undoc-members:
-   :show-inheritance:

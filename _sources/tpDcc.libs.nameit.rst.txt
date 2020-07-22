@@ -8,15 +8,7 @@ Subpackages
    :maxdepth: 4
 
    tpDcc.libs.nameit.core
-
-Submodules
-----------
-
-.. toctree::
-   :maxdepth: 4
-
-   tpDcc.libs.nameit.loader
-   tpDcc.libs.nameit.register
+   tpDcc.libs.nameit.externals
 
 Module contents
 ---------------
