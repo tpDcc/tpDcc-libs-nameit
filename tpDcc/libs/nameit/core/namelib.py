@@ -12,12 +12,11 @@ import re
 import copy
 import json
 import yaml
-import lucidity
 import traceback
 from collections import OrderedDict
 
 import tpDcc
-from tpDcc.libs import nameit
+from tpDcc.libs.nameit.externals import lucidity
 from tpDcc.libs.python import jsonio, yamlio, python, strings as string_utils, name as name_utils
 
 logger = tpDcc.LogsMgr().get_logger('tpDcc-tools-nameit')
@@ -295,13 +294,17 @@ class Rule(Serializable, object):
         Parse a rule taking in account the fields of the rule
         """
 
-        ret_val = dict()
+        ret_val = OrderedDict()
 
         # Take tokens from the current name using a separator character
         split_name = name.split('_')
 
         # Loop trough each field of the current active rule
         for i, f in enumerate(self.fields()):
+
+            if i > len(split_name) - 1:
+                ret_val[f] = None
+                continue
 
             # Get current value and its respective token
             value = split_name[i]
