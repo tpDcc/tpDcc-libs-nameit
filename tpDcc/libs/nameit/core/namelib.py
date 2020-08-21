@@ -12,14 +12,14 @@ import re
 import copy
 import json
 import yaml
+import logging
 import traceback
 from collections import OrderedDict
 
-import tpDcc
 from tpDcc.libs.nameit.externals import lucidity
 from tpDcc.libs.python import jsonio, yamlio, python, strings as string_utils, name as name_utils
 
-logger = tpDcc.LogsMgr().get_logger('tpDcc-tools-nameit')
+LOGGER = logging.getLogger('tpDcc-libs-nameit')
 
 
 class Serializable(object):
@@ -280,7 +280,7 @@ class Rule(Serializable, object):
                         if self.auto_fix:
                             continue
                         else:
-                            logger.warning(
+                            LOGGER.warning(
                                 'Missing field: "{}" when generating new name (None will be used instead)!'.format(k))
                     valid_values[k] = v
 
@@ -407,7 +407,7 @@ class Template(Serializable, object):
                 template.template_resolver = self.resolver
             return template.parse(path_to_parse)
         except Exception:
-            logger.warning(
+            LOGGER.warning(
                 'Given Path: {} does not match template pattern: {} | {}!'.format(
                     path_to_parse, self.name, self.pattern))
             return None
@@ -878,7 +878,7 @@ class NameLib(object):
         values = dict()
         rule = self.active_rule()
         if not rule:
-            logger.warning('Impossible to solve because no rule is activated!')
+            LOGGER.warning('Impossible to solve because no rule is activated!')
             return
 
         # Loop trough each field of the current active rule
@@ -903,7 +903,7 @@ class NameLib(object):
                 # If all fails, we try to get the field for the token
                 values[f] = token.solve(rule, kwargs.get(f))
             else:
-                logger.warning('Expression not valid: token {} not found in tokens list'.format(f))
+                LOGGER.warning('Expression not valid: token {} not found in tokens list'.format(f))
                 return
         return rule.solve(**values)
 
@@ -918,7 +918,7 @@ class NameLib(object):
 
         rule_fields = active_rule.fields()
         if len(rule_fields) != len(string_split):
-            logger.warning(
+            LOGGER.warning(
                 'Given string "{}" is not a valid name generated with current nomenclature rule: {}'.format(
                     string_to_parse, active_rule.name()))
             return None
@@ -959,7 +959,7 @@ class NameLib(object):
                 pass
 
         if not self.has_valid_naming_file():
-            logger.warning(
+            LOGGER.warning(
                 'Impossible to initialize naming data because naming file: "{}" does not exists!'.format(
                     self._naming_file))
             return None
@@ -1017,7 +1017,7 @@ class NameLib(object):
         """
 
         if not self.has_valid_naming_file():
-            logger.warning(
+            LOGGER.warning(
                 'Impossible to read naming file because naming file: "{}" does not exists!'.format(self._naming_file))
             return None
 
@@ -1028,7 +1028,7 @@ class NameLib(object):
                 data = jsonio.read_file(self._naming_file)
             return data
         except Exception as exc:
-            logger.error(
+            LOGGER.error(
                 'Impossible to read naming file "{}": {} | {}'.format(self._naming_file, exc, traceback.format_exc()))
 
         return None
@@ -1039,7 +1039,7 @@ class NameLib(object):
         """
 
         if not self.has_valid_naming_file():
-            logger.warning(
+            LOGGER.warning(
                 'Impossible to save naming file because naming file: "{}" does not exists!'.format(self._naming_file))
             return None
 
@@ -1049,7 +1049,7 @@ class NameLib(object):
             else:
                 jsonio.write_to_file(data, self._naming_file)
         except Exception as exc:
-            logger.error(
+            LOGGER.error(
                 'Impossible to read naming file "{}": {} | {}'.format(self._naming_file, exc, traceback.format_exc()))
 
     # def save_rule(self, name, filepath):
@@ -1229,11 +1229,11 @@ class NameLib(object):
         python.clear_list(self._templates_tokens)
 
         if self.has_valid_naming_file():
-            logger.info('Loading session from Naming File: {}'.format(self._naming_file))
+            LOGGER.info('Loading session from Naming File: {}'.format(self._naming_file))
 
             naming_data = self.load_naming_data()
             if not naming_data:
-                logger.warning('No naming data found!')
+                LOGGER.warning('No naming data found!')
                 return
 
             rules = naming_data.get(self._rules_key)
@@ -1261,7 +1261,7 @@ class NameLib(object):
             if not os.path.exists(repo):
                 os.mkdir(repo)
 
-            logger.info('Loading session from directory files: {}'.format(repo))
+            LOGGER.info('Loading session from directory files: {}'.format(repo))
 
             # Tokens and rules
             for dir_path, dir_names, file_names in os.walk(repo):
@@ -1287,7 +1287,7 @@ class NameLib(object):
     def save_session(self, repo=None):
 
         if self.has_valid_naming_file():
-            logger.info('Saving session from Naming File: {}'.format(self._naming_file))
+            LOGGER.info('Saving session from Naming File: {}'.format(self._naming_file))
 
             naming_data = self.get_naming_data()
             if naming_data:
@@ -1296,7 +1296,7 @@ class NameLib(object):
 
             repo = repo or self.get_repo()
 
-            logger.info('Saving session to directory: {}'.format(repo))
+            LOGGER.info('Saving session to directory: {}'.format(repo))
 
             # Tokens and rules
             for name, token in self._tokens.items():
