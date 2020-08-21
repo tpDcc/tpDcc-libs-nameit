@@ -1,7 +1,4 @@
 # ===================================================================
 # tpDcc-libs-nameit requirements file
 # ===================================================================
-pyyaml
-tpDcc-libs-python
-tpDcc-core
-tpDcc-libs-qt
+tpDcc-libs-ptyhon==0.0.11
