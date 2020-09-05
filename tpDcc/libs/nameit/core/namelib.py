@@ -476,6 +476,7 @@ class NameLib(object):
         self._naming_repo_env = 'NAMING_REPO'
         self._parser_format = parser_format or 'yaml'
         self._naming_file = naming_file
+        self.init_naming_data()
 
     @property
     def naming_file(self):
