@@ -1,11 +1,11 @@
 #! /usr/bin/env python
+# -*- coding: utf-8 -*-
 
 """
 Library module related with naming convention for the complete rigging toolkit
 """
 
-
-from __future__ import print_function, division, absolute_import, unicode_literals
+from __future__ import print_function, division, absolute_import
 
 import os
 import re
@@ -541,6 +541,8 @@ class NameLib(object):
         Sets the current active rule
         """
 
+        if isinstance(name, Rule):
+            name = name.name
         if not self.has_rule(name):
             return False
         self._active_rule = name
