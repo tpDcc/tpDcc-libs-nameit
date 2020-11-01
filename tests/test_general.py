@@ -5,10 +5,12 @@
 Module that contains general tests for tpDcc-libs-nameit
 """
 
-import pytest
+from tpDcc.libs.unittests.core import unittestcase
 
 from tpDcc.libs.nameit import __version__
 
 
-def test_version():
-    assert __version__.get_version()
+class VersionTests(unittestcase.UnitTestCase(as_class=True), object):
+
+    def test_version(self):
+        assert __version__.get_version()
